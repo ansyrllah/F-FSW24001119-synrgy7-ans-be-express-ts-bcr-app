@@ -1,0 +1,3111 @@
+openapi: 3.0.0
+info:
+  title: Challenge 6 SYNRGY RESTFul API BCR SYNRGY
+  description: build from Ansyarullah FSW-4 SYNRGY Batch 7
+  version: 1.0.0
+servers:
+  - url: http://localhost:5000
+  - url: http://localhost:8000
+components:
+  securitySchemes:
+    noauthAuth:
+      type: http
+      scheme: noauth
+    bearerAuth:
+      type: http
+      scheme: bearer
+tags:
+  - name: Auth Login Register
+  - name: CRUD Users
+  - name: CRUD Cars
+paths:
+  /api/login:
+    post:
+      tags:
+        - Auth Login Register
+      summary: Login - SuperAdmin & Admin
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                email: '{{emailSuperAdmin}}'
+                password: '{{passwordSuperAdmin}}'
+      security:
+        - noauthAuth: []
+      responses:
+        '201':
+          description: Created
+          headers:
+            X-Powered-By:
+              schema:
+                type: string
+                example: Express
+            Content-Type:
+              schema:
+                type: string
+                example: application/json; charset=utf-8
+            Content-Length:
+              schema:
+                type: integer
+                example: '602'
+            ETag:
+              schema:
+                type: string
+                example: W/"25a-0bbKjy/n44/DjE6LKwaAOae2yKM"
+            Date:
+              schema:
+                type: string
+                example: Mon, 10 Jun 2024 01:54:20 GMT
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            Keep-Alive:
+              schema:
+                type: string
+                example: timeout=5
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                status: true
+                message: Success Login
+                data:
+                  users:
+                    name: superadmin
+                    email: superadmin@mail.com
+                    role: SUPERADMIN
+                    token: >-
+                      eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoxLCJuYW1lIjoic3VwZXJhZG1pbiIsImVtYWlsIjoic3VwZXJhZG1pbkBtYWlsLmNvbSIsInBhc3N3b3JkIjoiJDJiJDEwJC85MmlOakVOSmR6NWtoMmlLeG9jQ08ydHhpNkRaVVpNNjUwLnBwU0pKdHVJdVR2UXZSL051Iiwicm9sZSI6IlNVUEVSQURNSU4iLCJjcmVhdGVkX2F0IjoiMjAyNC0wNi0xMFQwMTo1MjozNC4zOTFaIiwidXBkYXRlZF9hdCI6bnVsbCwiZGVsZXRlZF9hdCI6bnVsbH0sImlhdCI6MTcxNzk4NDQ2MCwiZXhwIjoxNzE4MDcwODYwfQ.cLPoWfZKTKxRk9dKjC73mqRLhMEv82l93UEOK9Au9VM
+                    expiresIn: 24h
+        '401':
+          description: Unauthorized
+          headers:
+            X-Powered-By:
+              schema:
+                type: string
+                example: Express
+            Content-Type:
+              schema:
+                type: string
+                example: application/json; charset=utf-8
+            Content-Length:
+              schema:
+                type: integer
+                example: '53'
+            ETag:
+              schema:
+                type: string
+                example: W/"35-735D2/gFZK+VEhEvNvpYJMqUHKU"
+            Date:
+              schema:
+                type: string
+                example: Mon, 10 Jun 2024 01:56:17 GMT
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            Keep-Alive:
+              schema:
+                type: string
+                example: timeout=5
+          content:
+            application/json:
+              schema:
+                type: object
+              examples:
+                example-0:
+                  summary: Wrong password
+                  value:
+                    status: false
+                    message: Wrong password
+                    data: {}
+        '403':
+          description: Forbidden
+          headers:
+            X-Powered-By:
+              schema:
+                type: string
+                example: Express
+            Content-Type:
+              schema:
+                type: string
+                example: application/json; charset=utf-8
+            Content-Length:
+              schema:
+                type: integer
+                example: '129'
+            ETag:
+              schema:
+                type: string
+                example: W/"81-VNHCUiI3uwI1OUZuesunhIkCgtc"
+            Date:
+              schema:
+                type: string
+                example: Mon, 10 Jun 2024 01:54:55 GMT
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            Keep-Alive:
+              schema:
+                type: string
+                example: timeout=5
+          content:
+            application/json:
+              schema:
+                type: object
+              examples:
+                example-0:
+                  summary: Required field
+                  value:
+                    status: false
+                    message: Validation Error
+                    data:
+                      validations:
+                        - email is a required field
+                        - password is a required field
+                example-1:
+                  summary: Account is inactive
+                  value:
+                    status: false
+                    message: Your account is inactive
+                    data: {}
+        '404':
+          description: Not Found
+          headers:
+            X-Powered-By:
+              schema:
+                type: string
+                example: Express
+            Content-Type:
+              schema:
+                type: string
+                example: application/json; charset=utf-8
+            Content-Length:
+              schema:
+                type: integer
+                example: '54'
+            ETag:
+              schema:
+                type: string
+                example: W/"36-q7wou7/vM+Gg3yrRXCYgAHlUJ7Y"
+            Date:
+              schema:
+                type: string
+                example: Mon, 10 Jun 2024 01:55:52 GMT
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            Keep-Alive:
+              schema:
+                type: string
+                example: timeout=5
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                status: false
+                message: Email not found
+                data: {}
+  /api/register:
+    post:
+      tags:
+        - Auth Login Register
+      summary: Register Member
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                name: '{{registerName}}'
+                email: '{{registerEmail}}'
+                password: '{{registerPassword}}'
+      security:
+        - bearerAuth: []
+      responses:
+        '201':
+          description: Created
+          headers:
+            X-Powered-By:
+              schema:
+                type: string
+                example: Express
+            Content-Type:
+              schema:
+                type: string
+                example: application/json; charset=utf-8
+            Content-Length:
+              schema:
+                type: integer
+                example: '44'
+            ETag:
+              schema:
+                type: string
+                example: W/"2c-tr6yIGX/DttuWGGRFJSSAWuJ5IY"
+            Date:
+              schema:
+                type: string
+                example: Mon, 10 Jun 2024 02:05:11 GMT
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            Keep-Alive:
+              schema:
+                type: string
+                example: timeout=5
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                status: true
+                message: Success Register
+        '403':
+          description: Forbidden
+          headers:
+            X-Powered-By:
+              schema:
+                type: string
+                example: Express
+            Content-Type:
+              schema:
+                type: string
+                example: application/json; charset=utf-8
+            Content-Length:
+              schema:
+                type: integer
+                example: '156'
+            ETag:
+              schema:
+                type: string
+                example: W/"9c-yrixRefFLXJmQp6oqC5zuwqzRhk"
+            Date:
+              schema:
+                type: string
+                example: Mon, 10 Jun 2024 02:05:36 GMT
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            Keep-Alive:
+              schema:
+                type: string
+                example: timeout=5
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                status: false
+                message: Validation Error
+                data:
+                  validations:
+                    - name is a required field
+                    - email is a required field
+                    - password is a required field
+  /api/current-user:
+    get:
+      tags:
+        - Auth Login Register
+      summary: Get Current User
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: OK
+          headers:
+            X-Powered-By:
+              schema:
+                type: string
+                example: Express
+            Content-Type:
+              schema:
+                type: string
+                example: application/json; charset=utf-8
+            Content-Length:
+              schema:
+                type: integer
+                example: '141'
+            ETag:
+              schema:
+                type: string
+                example: W/"8d-M/7AUDWDCT36nqnV4FPmLUlzt0c"
+            Date:
+              schema:
+                type: string
+                example: Mon, 10 Jun 2024 02:06:46 GMT
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            Keep-Alive:
+              schema:
+                type: string
+                example: timeout=5
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                status: true
+                message: Success Get Current User
+                data:
+                  users:
+                    name: superadmin
+                    email: superadmin@mail.com
+                    role: SUPERADMIN
+        '401':
+          description: Unauthorized
+          headers:
+            X-Powered-By:
+              schema:
+                type: string
+                example: Express
+            Content-Type:
+              schema:
+                type: string
+                example: application/json; charset=utf-8
+            Content-Length:
+              schema:
+                type: integer
+                example: '26'
+            ETag:
+              schema:
+                type: string
+                example: W/"1a-pljHtlo127JYJR4E/RYOPb6ucbw"
+            Date:
+              schema:
+                type: string
+                example: Mon, 10 Jun 2024 02:07:19 GMT
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            Keep-Alive:
+              schema:
+                type: string
+                example: timeout=5
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                message: Unauthorized
+  /api/users/:
+    get:
+      tags:
+        - CRUD Users
+      summary: Get All Users - SuperAdmin
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: OK
+          headers:
+            X-Powered-By:
+              schema:
+                type: string
+                example: Express
+            Content-Type:
+              schema:
+                type: string
+                example: application/json; charset=utf-8
+            Content-Length:
+              schema:
+                type: integer
+                example: '1207'
+            ETag:
+              schema:
+                type: string
+                example: W/"4b7-DyTmQx7WjH7U/GaaaAAr4AZgPcc"
+            Date:
+              schema:
+                type: string
+                example: Mon, 10 Jun 2024 02:10:29 GMT
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            Keep-Alive:
+              schema:
+                type: string
+                example: timeout=5
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                status: true
+                message: Success Get All Users
+                total: 5
+                data:
+                  users:
+                    - id: 1
+                      name: superadmin
+                      email: superadmin@mail.com
+                      password: >-
+                        $2b$10$1wOPZUWvRzN3S0my4YFPEu01.ZbtEEXyDZIRmciir3QYcQyAaOQJy
+                      role: SUPERADMIN
+                      created_at: '2024-06-10T02:09:16.272Z'
+                      updated_at: null
+                      deleted_at: null
+                    - id: 2
+                      name: admin
+                      email: admin@mail.com
+                      password: >-
+                        $2b$10$MNfy283m5Hsm0iyiJ1wCIen02rhWbiE.FWx./EF.CEtCr2.2rih56
+                      role: ADMIN
+                      created_at: '2024-06-10T02:09:16.327Z'
+                      updated_at: null
+                      deleted_at: null
+                    - id: 3
+                      name: member
+                      email: member@mail.com
+                      password: >-
+                        $2b$10$373UxoWyaOV4MspD4ihC9.VWHrGy/mLyqOaCPA3i2n4MyzM91QzmO
+                      role: MEMBER
+                      created_at: '2024-06-10T02:09:16.382Z'
+                      updated_at: null
+                      deleted_at: null
+                    - id: 4
+                      name: member inactive
+                      email: member1@mail.com
+                      password: >-
+                        $2b$10$gwh3JlHiksn0JyLk5VnoD.ymBSesBcesVfaWvGAvZeJEYvOnirSVK
+                      role: MEMBER
+                      created_at: '2024-06-10T02:09:16.436Z'
+                      updated_at: null
+                      deleted_at: '2024-06-10T02:09:16.436Z'
+                    - id: 5
+                      name: member 2
+                      email: member2@mail.com
+                      password: >-
+                        $2b$10$cwtSXTwdshZtYVPGTAy6Ce1NkcRxjMU9hFkQwr7eLaY6k9aO1YYBy
+                      role: MEMBER
+                      created_at: '2024-06-10T02:09:38.760Z'
+                      updated_at: null
+                      deleted_at: null
+        '401':
+          description: Unauthorized
+          headers:
+            X-Powered-By:
+              schema:
+                type: string
+                example: Express
+            Content-Type:
+              schema:
+                type: string
+                example: application/json; charset=utf-8
+            Content-Length:
+              schema:
+                type: integer
+                example: '26'
+            ETag:
+              schema:
+                type: string
+                example: W/"1a-pljHtlo127JYJR4E/RYOPb6ucbw"
+            Date:
+              schema:
+                type: string
+                example: Mon, 10 Jun 2024 02:12:17 GMT
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            Keep-Alive:
+              schema:
+                type: string
+                example: timeout=5
+          content:
+            application/json:
+              schema:
+                type: object
+              examples:
+                example-0:
+                  summary: Unauthorized
+                  value:
+                    message: Unauthorized
+                example-1:
+                  summary: Cannot access this feature
+                  value:
+                    message: You cannot access this feature!
+  /api/users/{id}:
+    get:
+      tags:
+        - CRUD Users
+      summary: Get Users By Id - SuperAdmin
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          schema:
+            type: integer
+          required: true
+          example: '1'
+      responses:
+        '200':
+          description: OK
+          headers:
+            X-Powered-By:
+              schema:
+                type: string
+                example: Express
+            Access-Control-Allow-Origin:
+              schema:
+                type: string
+                example: '*'
+            Content-Type:
+              schema:
+                type: string
+                example: application/json; charset=utf-8
+            Content-Length:
+              schema:
+                type: integer
+                example: '297'
+            ETag:
+              schema:
+                type: string
+                example: W/"129-2l9lDh+d3iIQHivmA+7SYThMcJo"
+            Date:
+              schema:
+                type: string
+                example: Thu, 13 Jun 2024 09:53:22 GMT
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            Keep-Alive:
+              schema:
+                type: string
+                example: timeout=5
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                status: true
+                message: Success Get Users By Id
+                data:
+                  users:
+                    id: 1
+                    name: superadmin
+                    email: superadmin@mail.com
+                    password: >-
+                      $2b$10$Kqj.3hDN1bj7ZDzSK8CXwOFpbJm84RXlLCm6tcSjaxpbAJgYluUZy
+                    role: SUPERADMIN
+                    created_at: '2024-06-13T09:39:04.495Z'
+                    updated_at: null
+                    deleted_at: null
+        '401':
+          description: Unauthorized
+          headers:
+            X-Powered-By:
+              schema:
+                type: string
+                example: Express
+            Access-Control-Allow-Origin:
+              schema:
+                type: string
+                example: '*'
+            Content-Type:
+              schema:
+                type: string
+                example: application/json; charset=utf-8
+            Content-Length:
+              schema:
+                type: integer
+                example: '26'
+            ETag:
+              schema:
+                type: string
+                example: W/"1a-pljHtlo127JYJR4E/RYOPb6ucbw"
+            Date:
+              schema:
+                type: string
+                example: Thu, 13 Jun 2024 09:53:59 GMT
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            Keep-Alive:
+              schema:
+                type: string
+                example: timeout=5
+          content:
+            application/json:
+              schema:
+                type: object
+              examples:
+                example-0:
+                  summary: Unauthorized
+                  value:
+                    message: Unauthorized
+                example-1:
+                  summary: Cannot access this feature
+                  value:
+                    message: You cannot access this feature!
+        '404':
+          description: Not Found
+          headers:
+            X-Powered-By:
+              schema:
+                type: string
+                example: Express
+            Access-Control-Allow-Origin:
+              schema:
+                type: string
+                example: '*'
+            Content-Type:
+              schema:
+                type: string
+                example: application/json; charset=utf-8
+            Content-Length:
+              schema:
+                type: integer
+                example: '53'
+            ETag:
+              schema:
+                type: string
+                example: W/"35-LKNFUH8XzYbdETOwaUhwxt3G2pQ"
+            Date:
+              schema:
+                type: string
+                example: Thu, 13 Jun 2024 09:42:51 GMT
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            Keep-Alive:
+              schema:
+                type: string
+                example: timeout=5
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                status: false
+                message: Data not found
+                data: {}
+    put:
+      tags:
+        - CRUD Users
+      summary: Update Users - SuperAdmin
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                name: '{{updateName}}'
+                email: '{{updateEmail}}'
+                password: '{{updatePassword}}'
+                role: admin
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          schema:
+            type: integer
+          required: true
+          description: Users Id
+          example: '6'
+      responses:
+        '201':
+          description: Created
+          headers:
+            X-Powered-By:
+              schema:
+                type: string
+                example: Express
+            Access-Control-Allow-Origin:
+              schema:
+                type: string
+                example: '*'
+            Content-Type:
+              schema:
+                type: string
+                example: application/json; charset=utf-8
+            Content-Length:
+              schema:
+                type: integer
+                example: '48'
+            ETag:
+              schema:
+                type: string
+                example: W/"30-oXYR5Qln13Q7c/Jl6fcEtshZZkA"
+            Date:
+              schema:
+                type: string
+                example: Thu, 13 Jun 2024 09:55:55 GMT
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            Keep-Alive:
+              schema:
+                type: string
+                example: timeout=5
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                status: true
+                message: Success Update Users
+        '401':
+          description: Unauthorized
+          headers:
+            X-Powered-By:
+              schema:
+                type: string
+                example: Express
+            Access-Control-Allow-Origin:
+              schema:
+                type: string
+                example: '*'
+            Content-Type:
+              schema:
+                type: string
+                example: application/json; charset=utf-8
+            Content-Length:
+              schema:
+                type: integer
+                example: '26'
+            ETag:
+              schema:
+                type: string
+                example: W/"1a-pljHtlo127JYJR4E/RYOPb6ucbw"
+            Date:
+              schema:
+                type: string
+                example: Thu, 13 Jun 2024 09:56:53 GMT
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            Keep-Alive:
+              schema:
+                type: string
+                example: timeout=5
+          content:
+            application/json:
+              schema:
+                type: object
+              examples:
+                example-0:
+                  summary: Unauthorized
+                  value:
+                    message: Unauthorized
+                example-1:
+                  summary: Cannot access this feature
+                  value:
+                    message: You cannot access this feature!
+        '403':
+          description: Forbidden
+          headers:
+            X-Powered-By:
+              schema:
+                type: string
+                example: Express
+            Access-Control-Allow-Origin:
+              schema:
+                type: string
+                example: '*'
+            Content-Type:
+              schema:
+                type: string
+                example: application/json; charset=utf-8
+            Content-Length:
+              schema:
+                type: integer
+                example: '156'
+            ETag:
+              schema:
+                type: string
+                example: W/"9c-yrixRefFLXJmQp6oqC5zuwqzRhk"
+            Date:
+              schema:
+                type: string
+                example: Thu, 13 Jun 2024 09:56:36 GMT
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            Keep-Alive:
+              schema:
+                type: string
+                example: timeout=5
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                status: false
+                message: Validation Error
+                data:
+                  validations:
+                    - name is a required field
+                    - email is a required field
+                    - password is a required field
+        '404':
+          description: Not Found
+          headers:
+            X-Powered-By:
+              schema:
+                type: string
+                example: Express
+            Access-Control-Allow-Origin:
+              schema:
+                type: string
+                example: '*'
+            Content-Type:
+              schema:
+                type: string
+                example: application/json; charset=utf-8
+            Content-Length:
+              schema:
+                type: integer
+                example: '53'
+            ETag:
+              schema:
+                type: string
+                example: W/"35-LKNFUH8XzYbdETOwaUhwxt3G2pQ"
+            Date:
+              schema:
+                type: string
+                example: Thu, 13 Jun 2024 09:56:11 GMT
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            Keep-Alive:
+              schema:
+                type: string
+                example: timeout=5
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                status: false
+                message: Data not found
+                data: {}
+    delete:
+      tags:
+        - CRUD Users
+      summary: Delete Users - SuperAdmin
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          schema:
+            type: integer
+          required: true
+          description: Users Id
+          example: '6'
+      responses:
+        '200':
+          description: OK
+          headers:
+            X-Powered-By:
+              schema:
+                type: string
+                example: Express
+            Access-Control-Allow-Origin:
+              schema:
+                type: string
+                example: '*'
+            Content-Type:
+              schema:
+                type: string
+                example: application/json; charset=utf-8
+            Content-Length:
+              schema:
+                type: integer
+                example: '48'
+            ETag:
+              schema:
+                type: string
+                example: W/"30-rLAniM1jT6sa+We5ikT7Ic1XcOc"
+            Date:
+              schema:
+                type: string
+                example: Thu, 13 Jun 2024 09:59:34 GMT
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            Keep-Alive:
+              schema:
+                type: string
+                example: timeout=5
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                status: true
+                message: Success Delete Users
+        '401':
+          description: Unauthorized
+          headers:
+            X-Powered-By:
+              schema:
+                type: string
+                example: Express
+            Access-Control-Allow-Origin:
+              schema:
+                type: string
+                example: '*'
+            Content-Type:
+              schema:
+                type: string
+                example: application/json; charset=utf-8
+            Content-Length:
+              schema:
+                type: integer
+                example: '26'
+            ETag:
+              schema:
+                type: string
+                example: W/"1a-pljHtlo127JYJR4E/RYOPb6ucbw"
+            Date:
+              schema:
+                type: string
+                example: Thu, 13 Jun 2024 09:58:56 GMT
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            Keep-Alive:
+              schema:
+                type: string
+                example: timeout=5
+          content:
+            application/json:
+              schema:
+                type: object
+              examples:
+                example-0:
+                  summary: Unauthorized
+                  value:
+                    message: Unauthorized
+                example-1:
+                  summary: Cannot access this feature
+                  value:
+                    message: You cannot access this feature!
+        '404':
+          description: Not Found
+          headers:
+            X-Powered-By:
+              schema:
+                type: string
+                example: Express
+            Access-Control-Allow-Origin:
+              schema:
+                type: string
+                example: '*'
+            Content-Type:
+              schema:
+                type: string
+                example: application/json; charset=utf-8
+            Content-Length:
+              schema:
+                type: integer
+                example: '53'
+            ETag:
+              schema:
+                type: string
+                example: W/"35-LKNFUH8XzYbdETOwaUhwxt3G2pQ"
+            Date:
+              schema:
+                type: string
+                example: Thu, 13 Jun 2024 09:58:37 GMT
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            Keep-Alive:
+              schema:
+                type: string
+                example: timeout=5
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                status: false
+                message: Data not found
+                data: {}
+  /api/users:
+    post:
+      tags:
+        - CRUD Users
+      summary: Insert Users - SuperAdmin
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                name: '{{insertName}}'
+                email: '{{insertEmail}}'
+                password: '{{insertPassword}}'
+                role: admin
+      security:
+        - bearerAuth: []
+      responses:
+        '201':
+          description: Created
+          headers:
+            X-Powered-By:
+              schema:
+                type: string
+                example: Express
+            Access-Control-Allow-Origin:
+              schema:
+                type: string
+                example: '*'
+            Content-Type:
+              schema:
+                type: string
+                example: application/json; charset=utf-8
+            Content-Length:
+              schema:
+                type: integer
+                example: '45'
+            ETag:
+              schema:
+                type: string
+                example: W/"2d-W6JBxkFx6OEiwPjnJVuP82F3d68"
+            Date:
+              schema:
+                type: string
+                example: Thu, 13 Jun 2024 09:47:43 GMT
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            Keep-Alive:
+              schema:
+                type: string
+                example: timeout=5
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                status: true
+                message: Success Add Users
+        '401':
+          description: Unauthorized
+          headers:
+            X-Powered-By:
+              schema:
+                type: string
+                example: Express
+            Access-Control-Allow-Origin:
+              schema:
+                type: string
+                example: '*'
+            Content-Type:
+              schema:
+                type: string
+                example: application/json; charset=utf-8
+            Content-Length:
+              schema:
+                type: integer
+                example: '26'
+            ETag:
+              schema:
+                type: string
+                example: W/"1a-pljHtlo127JYJR4E/RYOPb6ucbw"
+            Date:
+              schema:
+                type: string
+                example: Thu, 13 Jun 2024 09:48:37 GMT
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            Keep-Alive:
+              schema:
+                type: string
+                example: timeout=5
+          content:
+            application/json:
+              schema:
+                type: object
+              examples:
+                example-0:
+                  summary: Unauthorized
+                  value:
+                    message: Unauthorized
+                example-1:
+                  summary: Cannot access this feature
+                  value:
+                    message: You cannot access this feature!
+        '403':
+          description: Forbidden
+          headers:
+            X-Powered-By:
+              schema:
+                type: string
+                example: Express
+            Access-Control-Allow-Origin:
+              schema:
+                type: string
+                example: '*'
+            Content-Type:
+              schema:
+                type: string
+                example: application/json; charset=utf-8
+            Content-Length:
+              schema:
+                type: integer
+                example: '156'
+            ETag:
+              schema:
+                type: string
+                example: W/"9c-yrixRefFLXJmQp6oqC5zuwqzRhk"
+            Date:
+              schema:
+                type: string
+                example: Thu, 13 Jun 2024 09:48:19 GMT
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            Keep-Alive:
+              schema:
+                type: string
+                example: timeout=5
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                status: false
+                message: Validation Error
+                data:
+                  validations:
+                    - name is a required field
+                    - email is a required field
+                    - password is a required field
+  /api/cars/:
+    get:
+      tags:
+        - CRUD Cars
+      summary: Get All Cars - SuperAdmin & Admin
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: OK
+          headers:
+            X-Powered-By:
+              schema:
+                type: string
+                example: Express
+            Access-Control-Allow-Origin:
+              schema:
+                type: string
+                example: '*'
+            Content-Type:
+              schema:
+                type: string
+                example: application/json; charset=utf-8
+            Content-Length:
+              schema:
+                type: integer
+                example: '2749'
+            ETag:
+              schema:
+                type: string
+                example: W/"abd-Pp5CBZTbMzqwpsAxv7prPEpfe9M"
+            Date:
+              schema:
+                type: string
+                example: Thu, 13 Jun 2024 10:00:58 GMT
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            Keep-Alive:
+              schema:
+                type: string
+                example: timeout=5
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                status: true
+                message: Success Get All Cars
+                total: 3
+                data:
+                  cars:
+                    - id: 3
+                      typeDriver: Without Driver
+                      plate: OSL-4224
+                      manufacture: Lincoln
+                      model: MKZ
+                      image: >-
+                        https://res.cloudinary.com/dpavtrweo/image/upload/v1715801963/challenge5/ifpfouew8d4wlv8zm3in.jpg
+                      rentPerDay: 900000
+                      capacity: 6
+                      description: >-
+                        Driver & front passenger map pockets. Direct-type tire
+                        pressure monitor system. Cargo area lamp. Glove box
+                        lamp.
+                      transmission: Automanual
+                      available: true
+                      type: Sedan
+                      year: 2021
+                      availableAt: '2024-06-13T09:39:04.413Z'
+                      options:
+                        - Bucket Seats
+                        - 'Airbag: Passenger'
+                        - 'Airbag: Driver'
+                        - Power Seats
+                        - 'Airbag: Side'
+                        - Antilock Brakes
+                        - CD (Multi Disc)
+                      specs:
+                        - Driver & front passenger map pockets
+                        - Direct-type tire pressure monitor system
+                        - Cargo area lamp
+                        - Glove box lamp
+                        - Silver finish interior door handles
+                        - >-
+                          Driver & front passenger advanced multistage airbags
+                          w/occupant sensors
+                        - >-
+                          Silver accent IP trim finisher -inc: silver shifter
+                          finisher
+                        - Fasten seat belt warning light/chime
+                      created_at: '2024-06-13T09:39:04.413Z'
+                      updated_at: null
+                      deleted_at: null
+                    - id: 2
+                      typeDriver: With Driver
+                      plate: WXB-3984
+                      manufacture: BMW
+                      model: X5
+                      image: >-
+                        https://res.cloudinary.com/dpavtrweo/image/upload/v1715801963/challenge5/wjkgvj4akcrenh1mmwec.jpg
+                      rentPerDay: 800000
+                      capacity: 6
+                      description: >-
+                        Rear passenger map pockets. Electrochromic rearview
+                        mirror. Dual chrome exhaust tips. Locking glove box.
+                      transmission: Automatic
+                      available: false
+                      type: Convertible
+                      year: 2019
+                      availableAt: '2024-06-13T09:39:04.413Z'
+                      options:
+                        - Keyless Entry
+                        - Power Windows
+                        - MP3 (Single Disc)
+                        - CD (Multi Disc)
+                        - Navigation
+                      specs:
+                        - Rear passenger map pockets
+                        - Electrochromic rearview mirror
+                        - Dual chrome exhaust tips
+                        - Locking glove box
+                        - Pwr front vented disc/rear drum brakes
+                      created_at: '2024-06-13T09:39:04.413Z'
+                      updated_at: null
+                      deleted_at: null
+                    - id: 1
+                      typeDriver: With Driver
+                      plate: DBH-3491
+                      manufacture: Ford
+                      model: F150
+                      image: >-
+                        https://res.cloudinary.com/dpavtrweo/image/upload/v1715801964/challenge5/hoqqtv26r8qgv46jexlm.jpg
+                      rentPerDay: 200000
+                      capacity: 2
+                      description: >-
+                        Brake assist. Leather-wrapped shift knob. Glove box
+                        lamp. Air conditioning w/in-cabin microfilter.
+                      transmission: Automatic
+                      available: true
+                      type: Sedan
+                      year: 2022
+                      availableAt: '2024-06-13T09:39:04.413Z'
+                      options:
+                        - Cruise Control
+                        - Tinted Glass
+                        - Tinted Glass
+                        - Tinted Glass
+                        - AM/FM Stereo
+                      specs:
+                        - Brake assist
+                        - Leather-wrapped shift knob
+                        - Glove box lamp
+                        - Air conditioning w/in-cabin microfilter
+                        - Body color folding remote-controlled pwr mirrors
+                        - >-
+                          Dual-stage front airbags w/occupant classification
+                          system
+                      created_at: '2024-06-13T09:39:04.413Z'
+                      updated_at: null
+                      deleted_at: null
+        '401':
+          description: Unauthorized
+          headers:
+            X-Powered-By:
+              schema:
+                type: string
+                example: Express
+            Access-Control-Allow-Origin:
+              schema:
+                type: string
+                example: '*'
+            Content-Type:
+              schema:
+                type: string
+                example: application/json; charset=utf-8
+            Content-Length:
+              schema:
+                type: integer
+                example: '26'
+            ETag:
+              schema:
+                type: string
+                example: W/"1a-pljHtlo127JYJR4E/RYOPb6ucbw"
+            Date:
+              schema:
+                type: string
+                example: Thu, 13 Jun 2024 10:02:36 GMT
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            Keep-Alive:
+              schema:
+                type: string
+                example: timeout=5
+          content:
+            application/json:
+              schema:
+                type: object
+              examples:
+                example-0:
+                  summary: Unauthorized
+                  value:
+                    message: Unauthorized
+                example-1:
+                  summary: Cannot access this feature
+                  value:
+                    message: You cannot access this feature!
+  /api/cars/{id}:
+    get:
+      tags:
+        - CRUD Cars
+      summary: Get Car By Id - SuperAdmin & Admin
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          schema:
+            type: integer
+          required: true
+          example: '1'
+      responses:
+        '200':
+          description: OK
+          headers:
+            X-Powered-By:
+              schema:
+                type: string
+                example: Express
+            Access-Control-Allow-Origin:
+              schema:
+                type: string
+                example: '*'
+            Content-Type:
+              schema:
+                type: string
+                example: application/json; charset=utf-8
+            Content-Length:
+              schema:
+                type: integer
+                example: '914'
+            ETag:
+              schema:
+                type: string
+                example: W/"392-MW/9xQEviwMWQGl8hCsLa+jekmc"
+            Date:
+              schema:
+                type: string
+                example: Thu, 13 Jun 2024 10:04:54 GMT
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            Keep-Alive:
+              schema:
+                type: string
+                example: timeout=5
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                status: true
+                message: Success Get Cars By Id
+                data:
+                  cars:
+                    id: 1
+                    typeDriver: With Driver
+                    plate: DBH-3491
+                    manufacture: Ford
+                    model: F150
+                    image: >-
+                      https://res.cloudinary.com/dpavtrweo/image/upload/v1715801964/challenge5/hoqqtv26r8qgv46jexlm.jpg
+                    rentPerDay: 200000
+                    capacity: 2
+                    description: >-
+                      Brake assist. Leather-wrapped shift knob. Glove box lamp.
+                      Air conditioning w/in-cabin microfilter.
+                    transmission: Automatic
+                    available: true
+                    type: Sedan
+                    year: 2022
+                    availableAt: '2024-06-13T09:39:04.413Z'
+                    options:
+                      - Cruise Control
+                      - Tinted Glass
+                      - Tinted Glass
+                      - Tinted Glass
+                      - AM/FM Stereo
+                    specs:
+                      - Brake assist
+                      - Leather-wrapped shift knob
+                      - Glove box lamp
+                      - Air conditioning w/in-cabin microfilter
+                      - Body color folding remote-controlled pwr mirrors
+                      - >-
+                        Dual-stage front airbags w/occupant classification
+                        system
+                    created_at: '2024-06-13T09:39:04.413Z'
+                    updated_at: null
+                    deleted_at: null
+        '401':
+          description: Unauthorized
+          headers:
+            X-Powered-By:
+              schema:
+                type: string
+                example: Express
+            Access-Control-Allow-Origin:
+              schema:
+                type: string
+                example: '*'
+            Content-Type:
+              schema:
+                type: string
+                example: application/json; charset=utf-8
+            Content-Length:
+              schema:
+                type: integer
+                example: '26'
+            ETag:
+              schema:
+                type: string
+                example: W/"1a-pljHtlo127JYJR4E/RYOPb6ucbw"
+            Date:
+              schema:
+                type: string
+                example: Thu, 13 Jun 2024 10:05:34 GMT
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            Keep-Alive:
+              schema:
+                type: string
+                example: timeout=5
+          content:
+            application/json:
+              schema:
+                type: object
+              examples:
+                example-0:
+                  summary: Unauthorized
+                  value:
+                    message: Unauthorized
+                example-1:
+                  summary: Cannot access this feature
+                  value:
+                    message: You cannot access this feature!
+        '404':
+          description: Not Found
+          headers:
+            X-Powered-By:
+              schema:
+                type: string
+                example: Express
+            Access-Control-Allow-Origin:
+              schema:
+                type: string
+                example: '*'
+            Content-Type:
+              schema:
+                type: string
+                example: application/json; charset=utf-8
+            Content-Length:
+              schema:
+                type: integer
+                example: '53'
+            ETag:
+              schema:
+                type: string
+                example: W/"35-LKNFUH8XzYbdETOwaUhwxt3G2pQ"
+            Date:
+              schema:
+                type: string
+                example: Thu, 13 Jun 2024 10:05:17 GMT
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            Keep-Alive:
+              schema:
+                type: string
+                example: timeout=5
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                status: false
+                message: Data not found
+                data: {}
+    put:
+      tags:
+        - CRUD Cars
+      summary: Update Cars - SuperAdmin & Admin
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                typeDriver:
+                  type: string
+                  example: With Driver
+                plate:
+                  type: string
+                  example: BTW-1960
+                manufacture:
+                  type: string
+                  example: Honda
+                model:
+                  type: string
+                  example: Accord
+                image:
+                  type: string
+                  format: binary
+                rentPerDay:
+                  type: integer
+                  example: '500000'
+                capacity:
+                  type: integer
+                  example: '4'
+                description:
+                  type: string
+                  example: >-
+                    Silver finish interior door handles. 160-amp alternator.
+                    Tire pressure monitoring system (TPMS). Cloth covered
+                    headliner.
+                transmission:
+                  type: string
+                  example: Automatic
+                available:
+                  type: boolean
+                  example: 'true'
+                type:
+                  type: string
+                  example: Sedan
+                year:
+                  type: integer
+                  example: '2020'
+                availableAt:
+                  type: string
+                  example: '2024-06-13T23:19:09.025Z'
+                options:
+                  type: string
+                  example: 'A/C: Rear'
+                specs:
+                  type: string
+                  example: >-
+                    Dual front 2-stage airbags -inc: passenger occupant
+                    classification system w/twin-chamber airbag
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          schema:
+            type: integer
+          required: true
+          example: '4'
+      responses:
+        '201':
+          description: Created
+          headers:
+            X-Powered-By:
+              schema:
+                type: string
+                example: Express
+            Access-Control-Allow-Origin:
+              schema:
+                type: string
+                example: '*'
+            Content-Type:
+              schema:
+                type: string
+                example: application/json; charset=utf-8
+            Content-Length:
+              schema:
+                type: integer
+                example: '47'
+            ETag:
+              schema:
+                type: string
+                example: W/"2f-2ALgRu3LB07oZqvXvzlJAc7f+ME"
+            Date:
+              schema:
+                type: string
+                example: Thu, 13 Jun 2024 10:19:21 GMT
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            Keep-Alive:
+              schema:
+                type: string
+                example: timeout=5
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                status: true
+                message: Success Update Cars
+        '401':
+          description: Unauthorized
+          headers:
+            X-Powered-By:
+              schema:
+                type: string
+                example: Express
+            Access-Control-Allow-Origin:
+              schema:
+                type: string
+                example: '*'
+            Content-Type:
+              schema:
+                type: string
+                example: application/json; charset=utf-8
+            Content-Length:
+              schema:
+                type: integer
+                example: '26'
+            ETag:
+              schema:
+                type: string
+                example: W/"1a-pljHtlo127JYJR4E/RYOPb6ucbw"
+            Date:
+              schema:
+                type: string
+                example: Thu, 13 Jun 2024 10:18:25 GMT
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            Keep-Alive:
+              schema:
+                type: string
+                example: timeout=5
+          content:
+            application/json:
+              schema:
+                type: object
+              examples:
+                example-0:
+                  summary: Unauthorized
+                  value:
+                    message: Unauthorized
+                example-1:
+                  summary: Cannot access this feature
+                  value:
+                    message: You cannot access this feature!
+        '403':
+          description: Forbidden
+          headers:
+            X-Powered-By:
+              schema:
+                type: string
+                example: Express
+            Access-Control-Allow-Origin:
+              schema:
+                type: string
+                example: '*'
+            Content-Type:
+              schema:
+                type: string
+                example: application/json; charset=utf-8
+            Content-Length:
+              schema:
+                type: integer
+                example: '498'
+            ETag:
+              schema:
+                type: string
+                example: W/"1f2-+qUFgzpUkLAH+4FzIIKdooFbq6o"
+            Date:
+              schema:
+                type: string
+                example: Thu, 13 Jun 2024 10:17:30 GMT
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            Keep-Alive:
+              schema:
+                type: string
+                example: timeout=5
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                status: false
+                message: Validation Error
+                data:
+                  validations:
+                    - typeDriver is a required field
+                    - plate is a required field
+                    - manufacture is a required field
+                    - model is a required field
+                    - image is a required field
+                    - rentPerDay is a required field
+                    - capacity is a required field
+                    - description is a required field
+                    - transmission is a required field
+                    - available is a required field
+                    - type is a required field
+                    - year is a required field
+                    - options is a required field
+                    - specs is a required field
+        '404':
+          description: Not Found
+          headers:
+            X-Powered-By:
+              schema:
+                type: string
+                example: Express
+            Access-Control-Allow-Origin:
+              schema:
+                type: string
+                example: '*'
+            Content-Type:
+              schema:
+                type: string
+                example: application/json; charset=utf-8
+            Content-Length:
+              schema:
+                type: integer
+                example: '53'
+            ETag:
+              schema:
+                type: string
+                example: W/"35-LKNFUH8XzYbdETOwaUhwxt3G2pQ"
+            Date:
+              schema:
+                type: string
+                example: Thu, 13 Jun 2024 10:16:50 GMT
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            Keep-Alive:
+              schema:
+                type: string
+                example: timeout=5
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                status: false
+                message: Data not found
+                data: {}
+    delete:
+      tags:
+        - CRUD Cars
+      summary: Delete Cars - SuperAdmin & Admin
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          schema:
+            type: integer
+          required: true
+          example: '2'
+      responses:
+        '200':
+          description: OK
+          headers:
+            X-Powered-By:
+              schema:
+                type: string
+                example: Express
+            Access-Control-Allow-Origin:
+              schema:
+                type: string
+                example: '*'
+            Content-Type:
+              schema:
+                type: string
+                example: application/json; charset=utf-8
+            Content-Length:
+              schema:
+                type: integer
+                example: '46'
+            ETag:
+              schema:
+                type: string
+                example: W/"2e-0ZKi84ktQN5FMIv3zqM0AEdK5O0"
+            Date:
+              schema:
+                type: string
+                example: Thu, 13 Jun 2024 10:22:59 GMT
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            Keep-Alive:
+              schema:
+                type: string
+                example: timeout=5
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                status: true
+                message: Success Delete Car
+        '401':
+          description: Unauthorized
+          headers:
+            X-Powered-By:
+              schema:
+                type: string
+                example: Express
+            Access-Control-Allow-Origin:
+              schema:
+                type: string
+                example: '*'
+            Content-Type:
+              schema:
+                type: string
+                example: application/json; charset=utf-8
+            Content-Length:
+              schema:
+                type: integer
+                example: '26'
+            ETag:
+              schema:
+                type: string
+                example: W/"1a-pljHtlo127JYJR4E/RYOPb6ucbw"
+            Date:
+              schema:
+                type: string
+                example: Thu, 13 Jun 2024 10:22:12 GMT
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            Keep-Alive:
+              schema:
+                type: string
+                example: timeout=5
+          content:
+            application/json:
+              schema:
+                type: object
+              examples:
+                example-0:
+                  summary: Unauthorized
+                  value:
+                    message: Unauthorized
+                example-1:
+                  summary: Cannot access this feature
+                  value:
+                    message: You cannot access this feature!
+        '404':
+          description: Not Found
+          headers:
+            X-Powered-By:
+              schema:
+                type: string
+                example: Express
+            Access-Control-Allow-Origin:
+              schema:
+                type: string
+                example: '*'
+            Content-Type:
+              schema:
+                type: string
+                example: application/json; charset=utf-8
+            Content-Length:
+              schema:
+                type: integer
+                example: '53'
+            ETag:
+              schema:
+                type: string
+                example: W/"35-LKNFUH8XzYbdETOwaUhwxt3G2pQ"
+            Date:
+              schema:
+                type: string
+                example: Thu, 13 Jun 2024 10:21:54 GMT
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            Keep-Alive:
+              schema:
+                type: string
+                example: timeout=5
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                status: false
+                message: Data not found
+                data: {}
+  /api/cars:
+    post:
+      tags:
+        - CRUD Cars
+      summary: Insert Cars - SuperAdmin & Admin
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                typeDriver:
+                  type: string
+                  example: Without Driver
+                plate:
+                  type: string
+                  example: VPT-9753
+                manufacture:
+                  type: string
+                  example: BMW
+                model:
+                  type: string
+                  example: M5
+                image:
+                  type: string
+                  format: binary
+                rentPerDay:
+                  type: integer
+                  example: '900000'
+                capacity:
+                  type: integer
+                  example: '6'
+                description:
+                  type: string
+                  example: 6.1L SRT V8 \"Hemi\" engine.
+                transmission:
+                  type: string
+                  example: Manual
+                available:
+                  type: boolean
+                  example: 'true'
+                type:
+                  type: string
+                  example: Hatchback
+                year:
+                  type: integer
+                  example: '2018'
+                availableAt:
+                  type: string
+                  example: '2024-06-09T23:19:09.025Z'
+                options:
+                  type: string
+                  example: 'A/C: Rear'
+                specs:
+                  type: string
+                  example: Electronic throttle control system w/intelligence (ETCS-i)
+      security:
+        - bearerAuth: []
+      responses:
+        '201':
+          description: Created
+          headers:
+            X-Powered-By:
+              schema:
+                type: string
+                example: Express
+            Access-Control-Allow-Origin:
+              schema:
+                type: string
+                example: '*'
+            Content-Type:
+              schema:
+                type: string
+                example: application/json; charset=utf-8
+            Content-Length:
+              schema:
+                type: integer
+                example: '44'
+            ETag:
+              schema:
+                type: string
+                example: W/"2c-bWKwgr6WRYQakm9cQcsa0gfssq0"
+            Date:
+              schema:
+                type: string
+                example: Thu, 13 Jun 2024 10:08:01 GMT
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            Keep-Alive:
+              schema:
+                type: string
+                example: timeout=5
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                status: true
+                message: Success Add Cars
+        '401':
+          description: Unauthorized
+          headers:
+            X-Powered-By:
+              schema:
+                type: string
+                example: Express
+            Access-Control-Allow-Origin:
+              schema:
+                type: string
+                example: '*'
+            Content-Type:
+              schema:
+                type: string
+                example: application/json; charset=utf-8
+            Content-Length:
+              schema:
+                type: integer
+                example: '26'
+            ETag:
+              schema:
+                type: string
+                example: W/"1a-pljHtlo127JYJR4E/RYOPb6ucbw"
+            Date:
+              schema:
+                type: string
+                example: Thu, 13 Jun 2024 10:08:56 GMT
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            Keep-Alive:
+              schema:
+                type: string
+                example: timeout=5
+          content:
+            application/json:
+              schema:
+                type: object
+              examples:
+                example-0:
+                  summary: Unauthorized
+                  value:
+                    message: Unauthorized
+                example-1:
+                  summary: Cannot access this feature
+                  value:
+                    message: You cannot access this feature!
+        '403':
+          description: Forbidden
+          headers:
+            X-Powered-By:
+              schema:
+                type: string
+                example: Express
+            Access-Control-Allow-Origin:
+              schema:
+                type: string
+                example: '*'
+            Content-Type:
+              schema:
+                type: string
+                example: application/json; charset=utf-8
+            Content-Length:
+              schema:
+                type: integer
+                example: '498'
+            ETag:
+              schema:
+                type: string
+                example: W/"1f2-+qUFgzpUkLAH+4FzIIKdooFbq6o"
+            Date:
+              schema:
+                type: string
+                example: Thu, 13 Jun 2024 10:08:29 GMT
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            Keep-Alive:
+              schema:
+                type: string
+                example: timeout=5
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                status: false
+                message: Validation Error
+                data:
+                  validations:
+                    - typeDriver is a required field
+                    - plate is a required field
+                    - manufacture is a required field
+                    - model is a required field
+                    - image is a required field
+                    - rentPerDay is a required field
+                    - capacity is a required field
+                    - description is a required field
+                    - transmission is a required field
+                    - available is a required field
+                    - type is a required field
+                    - year is a required field
+                    - options is a required field
+                    - specs is a required field
+  /api/cars/list-available:
+    get:
+      tags:
+        - CRUD Cars
+      summary: Get All Cars Available
+      security:
+        - noauthAuth: []
+      responses:
+        '200':
+          description: OK
+          headers:
+            X-Powered-By:
+              schema:
+                type: string
+                example: Express
+            Access-Control-Allow-Origin:
+              schema:
+                type: string
+                example: '*'
+            Content-Type:
+              schema:
+                type: string
+                example: application/json; charset=utf-8
+            Content-Length:
+              schema:
+                type: integer
+                example: '1989'
+            ETag:
+              schema:
+                type: string
+                example: W/"7c5-TCfVNDW4PhvTU0O/PK60+bKfcAI"
+            Date:
+              schema:
+                type: string
+                example: Thu, 13 Jun 2024 10:42:13 GMT
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            Keep-Alive:
+              schema:
+                type: string
+                example: timeout=5
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                status: true
+                message: Success Get All Cars
+                total: 3
+                data:
+                  cars:
+                    - id: 4
+                      typeDriver: With Driver
+                      plate: OSL-4224
+                      manufacture: BTW-1960
+                      model: Honda
+                      image: >-
+                        https://res.cloudinary.com/dpavtrweo/image/upload/v1718273959/web_bcr_cars/rrlfgpmjq0me6rss5tla.png
+                      rentPerDay: 500000
+                      capacity: 4
+                      description: >-
+                        Silver finish interior door handles. 160-amp alternator. Tire pressure monitoring system (TPMS). Cloth covered headliner.
+                      transmission: Automatic
+                      available: true
+                      type: Sedan
+                      year: 2020
+                      availableAt: '2024-06-13T23:19:09.025Z'
+                      options:
+                        - AM/FM Stereo
+                        - Power Windows
+                        - Power Locks
+                        - Power Windows
+                        - MP3 (Single Disc)
+                        - 'A/C: Rear'
+                      specs:
+                        - Silver finish interior door handles
+                        - 160-amp alternator
+                        - Tire pressure monitoring system (TPMS)
+                        - Cloth covered headliner
+                        - 625-amp maintenance-free battery
+                        - Torsion beam rear suspension w/stabilizer bar
+                        - Impact-dissipating upper interior trim
+                        - 'Dual front 2-stage airbags -inc: passenger occupant classification system w/twin-chamber airbag'
+                      created_at: '2024-06-13T10:07:58.701Z'
+                      updated_at: '2024-06-13T10:19:17.354Z'
+                      deleted_at: null
+                    - id: 3
+                      typeDriver: Without Driver
+                      plate: OSL-4224
+                      manufacture: Lincoln
+                      model: MKZ
+                      image: >-
+                        https://res.cloudinary.com/dpavtrweo/image/upload/v1715801963/challenge5/ifpfouew8d4wlv8zm3in.jpg
+                      rentPerDay: 900000
+                      capacity: 6
+                      description: >-
+                        Driver & front passenger map pockets. Direct-type tire
+                        pressure monitor system. Cargo area lamp. Glove box
+                        lamp.
+                      transmission: Automanual
+                      available: true
+                      type: Sedan
+                      year: 2021
+                      availableAt: '2024-06-13T09:39:04.413Z'
+                      options:
+                        - Bucket Seats
+                        - 'Airbag: Passenger'
+                        - 'Airbag: Driver'
+                        - Power Seats
+                        - 'Airbag: Side'
+                        - Antilock Brakes
+                        - CD (Multi Disc)
+                      specs:
+                        - Driver & front passenger map pockets
+                        - Direct-type tire pressure monitor system
+                        - Cargo area lamp
+                        - Glove box lamp
+                        - Silver finish interior door handles
+                        - >-
+                          Driver & front passenger advanced multistage airbags
+                          w/occupant sensors
+                        - >-
+                          Silver accent IP trim finisher -inc: silver shifter
+                          finisher
+                        - Fasten seat belt warning light/chime
+                      created_at: '2024-06-13T09:39:04.413Z'
+                      updated_at: null
+                      deleted_at: null
+                    - id: 1
+                      typeDriver: With Driver
+                      plate: DBH-3491
+                      manufacture: Ford
+                      model: F150
+                      image: >-
+                        https://res.cloudinary.com/dpavtrweo/image/upload/v1715801964/challenge5/hoqqtv26r8qgv46jexlm.jpg
+                      rentPerDay: 200000
+                      capacity: 2
+                      description: >-
+                        Brake assist. Leather-wrapped shift knob. Glove box
+                        lamp. Air conditioning w/in-cabin microfilter.
+                      transmission: Automatic
+                      available: true
+                      type: Sedan
+                      year: 2022
+                      availableAt: '2024-06-13T09:39:04.413Z'
+                      options:
+                        - Cruise Control
+                        - Tinted Glass
+                        - Tinted Glass
+                        - Tinted Glass
+                        - AM/FM Stereo
+                      specs:
+                        - Brake assist
+                        - Leather-wrapped shift knob
+                        - Glove box lamp
+                        - Air conditioning w/in-cabin microfilter
+                        - Body color folding remote-controlled pwr mirrors
+                        - >-
+                          Dual-stage front airbags w/occupant classification
+                          system
+                      created_at: '2024-06-13T09:39:04.413Z'
+                      updated_at: null
+                      deleted_at: null
+  /api/cars/list-available?typeDriver=...&date=...&pickTime=...&totalPassenger=...:
+    get:
+      tags:
+        - CRUD Cars
+      summary: Get Filter All Cars Available
+      security:
+        - noauthAuth: []
+      parameters:
+        - name: typeDriver
+          in: query
+          schema:
+            type: string
+          example: Without Driver
+        - name: date
+          in: query
+          schema:
+            type: string
+          example: '2024-06-08'
+        - name: pickTime
+          in: query
+          schema:
+            type: string
+          example: '08:00'
+        - name: totalPassenger
+          in: query
+          schema:
+            type: integer
+          example: '2'
+      responses:
+        '200':
+          description: OK
+          headers:
+            X-Powered-By:
+              schema:
+                type: string
+                example: Express
+            Access-Control-Allow-Origin:
+              schema:
+                type: string
+                example: '*'
+            Content-Type:
+              schema:
+                type: string
+                example: application/json; charset=utf-8
+            Content-Length:
+              schema:
+                type: integer
+                example: '1989'
+            ETag:
+              schema:
+                type: string
+                example: W/"7c5-TCfVNDW4PhvTU0O/PK60+bKfcAI"
+            Date:
+              schema:
+                type: string
+                example: Thu, 13 Jun 2024 10:42:13 GMT
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            Keep-Alive:
+              schema:
+                type: string
+                example: timeout=5
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                status: true
+                message: Success Get Filter All Cars Available
+                total: 2
+                data:
+                  cars:
+                    - id: 1
+                      typeDriver: With Driver
+                      plate: DBH-3491
+                      manufacture: Ford
+                      model: F150
+                      image: >-
+                        https://res.cloudinary.com/dpavtrweo/image/upload/v1715801964/challenge5/hoqqtv26r8qgv46jexlm.jpg
+                      rentPerDay: 200000
+                      capacity: 2
+                      description: >-
+                        Brake assist. Leather-wrapped shift knob. Glove box
+                        lamp. Air conditioning w/in-cabin microfilter.
+                      transmission: Automatic
+                      available: true
+                      type: Sedan
+                      year: 2022
+                      availableAt: '2024-06-13T09:39:04.413Z'
+                      options:
+                        - Cruise Control
+                        - Tinted Glass
+                        - Tinted Glass
+                        - Tinted Glass
+                        - AM/FM Stereo
+                      specs:
+                        - Brake assist
+                        - Leather-wrapped shift knob
+                        - Glove box lamp
+                        - Air conditioning w/in-cabin microfilter
+                        - Body color folding remote-controlled pwr mirrors
+                        - >-
+                          Dual-stage front airbags w/occupant classification
+                          system
+                      created_at: '2024-06-13T09:39:04.413Z'
+                      updated_at: null
+                      deleted_at: null
+                    - id: 4
+                      typeDriver: With Driver
+                      plate: BTW-1960
+                      manufacture: Honda
+                      model: Accord
+                      image: >-
+                        https://res.cloudinary.com/dpavtrweo/image/upload/v1718273959/web_bcr_cars/rrlfgpmjq0me6rss5tla.png
+                      rentPerDay: 500000
+                      capacity: 4
+                      description: >-
+                        Silver finish interior door handles. 160-amp alternator.
+                        Tire pressure monitoring system (TPMS). Cloth covered
+                        headliner.
+                      transmission: Automatic
+                      available: true
+                      type: Sedan
+                      year: 2020
+                      availableAt: '2024-06-13T23:19:09.025Z'
+                      options:
+                        - AM/FM Stereo
+                        - Power Windows
+                        - Power Locks
+                        - Power Windows
+                        - MP3 (Single Disc)
+                        - 'A/C: Rear'
+                      specs:
+                        - Silver finish interior door handles
+                        - 160-amp alternator
+                        - Tire pressure monitoring system (TPMS)
+                        - Cloth covered headliner
+                        - 625-amp maintenance-free battery
+                        - Torsion beam rear suspension w/stabilizer bar
+                        - Impact-dissipating upper interior trim
+                        - >-
+                          Dual front 2-stage airbags -inc: passenger occupant
+                          classification system w/twin-chamber airbag
+                      created_at: '2024-06-13T10:07:58.701Z'
+                      updated_at: '2024-06-13T10:19:17.354Z'
+                      deleted_at: null
+        '403':
+          description: Forbidden
+          headers:
+            X-Powered-By:
+              schema:
+                type: string
+                example: Express
+            Access-Control-Allow-Origin:
+              schema:
+                type: string
+                example: '*'
+            Content-Type:
+              schema:
+                type: string
+                example: application/json; charset=utf-8
+            Content-Length:
+              schema:
+                type: integer
+                example: '161'
+            ETag:
+              schema:
+                type: string
+                example: W/"a1-9Cb9qtaatiLbxf4RTbLPa9Kmjm8"
+            Date:
+              schema:
+                type: string
+                example: Thu, 13 Jun 2024 10:27:47 GMT
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            Keep-Alive:
+              schema:
+                type: string
+                example: timeout=5
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                status: false
+                message: Validation Error
+                data:
+                  validations:
+                    - typeDriver is a required field
+                    - date is a required field
+                    - pickTime is a required field
+        '404':
+          description: Not Found
+          headers:
+            X-Powered-By:
+              schema:
+                type: string
+                example: Express
+            Access-Control-Allow-Origin:
+              schema:
+                type: string
+                example: '*'
+            Content-Type:
+              schema:
+                type: string
+                example: application/json; charset=utf-8
+            Content-Length:
+              schema:
+                type: integer
+                example: '53'
+            ETag:
+              schema:
+                type: string
+                example: W/"35-LKNFUH8XzYbdETOwaUhwxt3G2pQ"
+            Date:
+              schema:
+                type: string
+                example: Thu, 13 Jun 2024 10:43:19 GMT
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            Keep-Alive:
+              schema:
+                type: string
+                example: timeout=5
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                status: false
+                message: Data not found
+                data: {}
+  /api/cars/logs:
+    get:
+      tags:
+        - CRUD Cars
+      summary: Get All Cars Logs - SuperAdmin & Admin
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: OK
+          headers:
+            X-Powered-By:
+              schema:
+                type: string
+                example: Express
+            Access-Control-Allow-Origin:
+              schema:
+                type: string
+                example: '*'
+            Content-Type:
+              schema:
+                type: string
+                example: application/json; charset=utf-8
+            Content-Length:
+              schema:
+                type: integer
+                example: '4704'
+            ETag:
+              schema:
+                type: string
+                example: W/"1260-T4FUMGutV9F/NeLkub3cC5CuOqI"
+            Date:
+              schema:
+                type: string
+                example: Thu, 13 Jun 2024 10:46:08 GMT
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            Keep-Alive:
+              schema:
+                type: string
+                example: timeout=5
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                status: true
+                message: Success Get All Cars Logs
+                total: 4
+                data:
+                  cars:
+                    - id: 4
+                      typeDriver: With Driver
+                      plate: BTW-1960
+                      manufacture: Honda
+                      model: Accord
+                      image: >-
+                        https://res.cloudinary.com/dpavtrweo/image/upload/v1718273959/web_bcr_cars/rrlfgpmjq0me6rss5tla.png
+                      rentPerDay: 500000
+                      capacity: 4
+                      description: >-
+                        Silver finish interior door handles. 160-amp alternator.
+                        Tire pressure monitoring system (TPMS). Cloth covered
+                        headliner.
+                      transmission: Automatic
+                      available: true
+                      type: Sedan
+                      year: 2020
+                      availableAt: '2024-06-13T23:19:09.025Z'
+                      options:
+                        - AM/FM Stereo
+                        - Power Windows
+                        - Power Locks
+                        - Power Windows
+                        - MP3 (Single Disc)
+                        - 'A/C: Rear'
+                      specs:
+                        - Silver finish interior door handles
+                        - 160-amp alternator
+                        - Tire pressure monitoring system (TPMS)
+                        - Cloth covered headliner
+                        - 625-amp maintenance-free battery
+                        - Torsion beam rear suspension w/stabilizer bar
+                        - Impact-dissipating upper interior trim
+                        - >-
+                          Dual front 2-stage airbags -inc: passenger occupant
+                          classification system w/twin-chamber airbag
+                      created_at: '2024-06-13T10:07:58.701Z'
+                      updated_at: '2024-06-13T10:19:17.354Z'
+                      deleted_at: null
+                      carsLogs:
+                        - action: UPDATE
+                          time_log: '2024-06-13T10:19:17.354Z'
+                          users:
+                            name: superadmin
+                            email: superadmin@mail.com
+                            role: SUPERADMIN
+                        - action: INSERT
+                          time_log: '2024-06-13T10:07:58.701Z'
+                          users:
+                            name: superadmin
+                            email: superadmin@mail.com
+                            role: SUPERADMIN
+                    - id: 3
+                      typeDriver: Without Driver
+                      plate: OSL-4224
+                      manufacture: Lincoln
+                      model: MKZ
+                      image: >-
+                        https://res.cloudinary.com/dpavtrweo/image/upload/v1715801963/challenge5/ifpfouew8d4wlv8zm3in.jpg
+                      rentPerDay: 900000
+                      capacity: 6
+                      description: >-
+                        Driver & front passenger map pockets. Direct-type tire
+                        pressure monitor system. Cargo area lamp. Glove box
+                        lamp.
+                      transmission: Automanual
+                      available: true
+                      type: Sedan
+                      year: 2021
+                      availableAt: '2024-06-13T09:39:04.413Z'
+                      options:
+                        - Bucket Seats
+                        - 'Airbag: Passenger'
+                        - 'Airbag: Driver'
+                        - Power Seats
+                        - 'Airbag: Side'
+                        - Antilock Brakes
+                        - CD (Multi Disc)
+                      specs:
+                        - Driver & front passenger map pockets
+                        - Direct-type tire pressure monitor system
+                        - Cargo area lamp
+                        - Glove box lamp
+                        - Silver finish interior door handles
+                        - >-
+                          Driver & front passenger advanced multistage airbags
+                          w/occupant sensors
+                        - >-
+                          Silver accent IP trim finisher -inc: silver shifter
+                          finisher
+                        - Fasten seat belt warning light/chime
+                      created_at: '2024-06-13T09:39:04.413Z'
+                      updated_at: null
+                      deleted_at: null
+                      carsLogs:
+                        - action: INSERT
+                          time_log: '2024-06-13T09:39:04.662Z'
+                          users:
+                            name: superadmin
+                            email: superadmin@mail.com
+                            role: SUPERADMIN
+                    - id: 2
+                      typeDriver: With Driver
+                      plate: WXB-3984
+                      manufacture: BMW
+                      model: X5
+                      image: >-
+                        https://res.cloudinary.com/dpavtrweo/image/upload/v1715801963/challenge5/wjkgvj4akcrenh1mmwec.jpg
+                      rentPerDay: 800000
+                      capacity: 6
+                      description: >-
+                        Rear passenger map pockets. Electrochromic rearview
+                        mirror. Dual chrome exhaust tips. Locking glove box.
+                      transmission: Automatic
+                      available: false
+                      type: Convertible
+                      year: 2019
+                      availableAt: '2024-06-13T09:39:04.413Z'
+                      options:
+                        - Keyless Entry
+                        - Power Windows
+                        - MP3 (Single Disc)
+                        - CD (Multi Disc)
+                        - Navigation
+                      specs:
+                        - Rear passenger map pockets
+                        - Electrochromic rearview mirror
+                        - Dual chrome exhaust tips
+                        - Locking glove box
+                        - Pwr front vented disc/rear drum brakes
+                      created_at: '2024-06-13T09:39:04.413Z'
+                      updated_at: null
+                      deleted_at: '2024-06-13T10:22:59.429Z'
+                      carsLogs:
+                        - action: DELETE
+                          time_log: '2024-06-13T10:22:59.428Z'
+                          users:
+                            name: superadmin
+                            email: superadmin@mail.com
+                            role: SUPERADMIN
+                        - action: INSERT
+                          time_log: '2024-06-13T09:39:04.662Z'
+                          users:
+                            name: superadmin
+                            email: superadmin@mail.com
+                            role: SUPERADMIN
+                    - id: 1
+                      typeDriver: With Driver
+                      plate: DBH-3491
+                      manufacture: Ford
+                      model: F150
+                      image: >-
+                        https://res.cloudinary.com/dpavtrweo/image/upload/v1715801964/challenge5/hoqqtv26r8qgv46jexlm.jpg
+                      rentPerDay: 200000
+                      capacity: 2
+                      description: >-
+                        Brake assist. Leather-wrapped shift knob. Glove box
+                        lamp. Air conditioning w/in-cabin microfilter.
+                      transmission: Automatic
+                      available: true
+                      type: Sedan
+                      year: 2022
+                      availableAt: '2024-06-13T09:39:04.413Z'
+                      options:
+                        - Cruise Control
+                        - Tinted Glass
+                        - Tinted Glass
+                        - Tinted Glass
+                        - AM/FM Stereo
+                      specs:
+                        - Brake assist
+                        - Leather-wrapped shift knob
+                        - Glove box lamp
+                        - Air conditioning w/in-cabin microfilter
+                        - Body color folding remote-controlled pwr mirrors
+                        - >-
+                          Dual-stage front airbags w/occupant classification
+                          system
+                      created_at: '2024-06-13T09:39:04.413Z'
+                      updated_at: null
+                      deleted_at: null
+                      carsLogs:
+                        - action: INSERT
+                          time_log: '2024-06-13T09:39:04.662Z'
+                          users:
+                            name: superadmin
+                            email: superadmin@mail.com
+                            role: SUPERADMIN
+        '401':
+          description: Unauthorized
+          headers:
+            X-Powered-By:
+              schema:
+                type: string
+                example: Express
+            Access-Control-Allow-Origin:
+              schema:
+                type: string
+                example: '*'
+            Content-Type:
+              schema:
+                type: string
+                example: application/json; charset=utf-8
+            Content-Length:
+              schema:
+                type: integer
+                example: '26'
+            ETag:
+              schema:
+                type: string
+                example: W/"1a-pljHtlo127JYJR4E/RYOPb6ucbw"
+            Date:
+              schema:
+                type: string
+                example: Thu, 13 Jun 2024 10:46:43 GMT
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            Keep-Alive:
+              schema:
+                type: string
+                example: timeout=5
+          content:
+            application/json:
+              schema:
+                type: object
+              examples:
+                example-0:
+                  summary: Unauthorized
+                  value:
+                    message: Unauthorized
+                example-1:
+                  summary: Cannot access this feature
+                  value:
+                    message: You cannot access this feature!
+  /api/cars/{idCars}/logs/:
+    get:
+      tags:
+        - CRUD Cars
+      summary: Get Logs By Cars Id - SuperAdmin & Admin
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: idCars
+          in: path
+          schema:
+            type: integer
+          required: true
+          description: Cars Id
+          example: '4'
+      responses:
+        '200':
+          description: OK
+          headers:
+            X-Powered-By:
+              schema:
+                type: string
+                example: Express
+            Access-Control-Allow-Origin:
+              schema:
+                type: string
+                example: '*'
+            Content-Type:
+              schema:
+                type: string
+                example: application/json; charset=utf-8
+            Content-Length:
+              schema:
+                type: integer
+                example: '1410'
+            ETag:
+              schema:
+                type: string
+                example: W/"582-AJjBW0ZEW4Hnq8DsfwdPi4IN34g"
+            Date:
+              schema:
+                type: string
+                example: Thu, 13 Jun 2024 10:48:05 GMT
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            Keep-Alive:
+              schema:
+                type: string
+                example: timeout=5
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                status: true
+                message: Success Get Logs By Cars Id
+                data:
+                  cars:
+                    - id: 4
+                      typeDriver: With Driver
+                      plate: BTW-1960
+                      manufacture: Honda
+                      model: Accord
+                      image: >-
+                        https://res.cloudinary.com/dpavtrweo/image/upload/v1718273959/web_bcr_cars/rrlfgpmjq0me6rss5tla.png
+                      rentPerDay: 500000
+                      capacity: 4
+                      description: >-
+                        Silver finish interior door handles. 160-amp alternator.
+                        Tire pressure monitoring system (TPMS). Cloth covered
+                        headliner.
+                      transmission: Automatic
+                      available: true
+                      type: Sedan
+                      year: 2020
+                      availableAt: '2024-06-13T23:19:09.025Z'
+                      options:
+                        - AM/FM Stereo
+                        - Power Windows
+                        - Power Locks
+                        - Power Windows
+                        - MP3 (Single Disc)
+                        - 'A/C: Rear'
+                      specs:
+                        - Silver finish interior door handles
+                        - 160-amp alternator
+                        - Tire pressure monitoring system (TPMS)
+                        - Cloth covered headliner
+                        - 625-amp maintenance-free battery
+                        - Torsion beam rear suspension w/stabilizer bar
+                        - Impact-dissipating upper interior trim
+                        - >-
+                          Dual front 2-stage airbags -inc: passenger occupant
+                          classification system w/twin-chamber airbag
+                      created_at: '2024-06-13T10:07:58.701Z'
+                      updated_at: '2024-06-13T10:19:17.354Z'
+                      deleted_at: null
+                      carsLogs:
+                        - action: UPDATE
+                          time_log: '2024-06-13T10:19:17.354Z'
+                          users:
+                            name: superadmin
+                            email: superadmin@mail.com
+                            role: SUPERADMIN
+                        - action: INSERT
+                          time_log: '2024-06-13T10:07:58.701Z'
+                          users:
+                            name: superadmin
+                            email: superadmin@mail.com
+                            role: SUPERADMIN
+        '401':
+          description: Unauthorized
+          headers:
+            X-Powered-By:
+              schema:
+                type: string
+                example: Express
+            Access-Control-Allow-Origin:
+              schema:
+                type: string
+                example: '*'
+            Content-Type:
+              schema:
+                type: string
+                example: application/json; charset=utf-8
+            Content-Length:
+              schema:
+                type: integer
+                example: '26'
+            ETag:
+              schema:
+                type: string
+                example: W/"1a-pljHtlo127JYJR4E/RYOPb6ucbw"
+            Date:
+              schema:
+                type: string
+                example: Thu, 13 Jun 2024 10:48:45 GMT
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            Keep-Alive:
+              schema:
+                type: string
+                example: timeout=5
+          content:
+            application/json:
+              schema:
+                type: object
+              examples:
+                example-0:
+                  summary: Unauthorized
+                  value:
+                    message: Unauthorized
+                example-1:
+                  summary: Cannot access this feature
+                  value:
+                    message: You cannot access this feature!
+        '404':
+          description: Not Found
+          headers:
+            X-Powered-By:
+              schema:
+                type: string
+                example: Express
+            Access-Control-Allow-Origin:
+              schema:
+                type: string
+                example: '*'
+            Content-Type:
+              schema:
+                type: string
+                example: application/json; charset=utf-8
+            Content-Length:
+              schema:
+                type: integer
+                example: '53'
+            ETag:
+              schema:
+                type: string
+                example: W/"35-LKNFUH8XzYbdETOwaUhwxt3G2pQ"
+            Date:
+              schema:
+                type: string
+                example: Thu, 13 Jun 2024 10:48:30 GMT
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            Keep-Alive:
+              schema:
+                type: string
+                example: timeout=5
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                status: false
+                message: Data not found
+                data: {}
